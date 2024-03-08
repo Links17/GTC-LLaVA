@@ -11,11 +11,13 @@ import mqtt_client
 app = Flask(__name__)
 
 client = mqtt_client.connect_mqtt()
+prompt = "What's in this picture?"
 
 
 @app.route("/gtc/scene_detection", methods=["POST"])
 def scene_detection_v2():
     try:
+
         data = request.json  # 获取JSON数据
         scene_id = data.get('sceneId')  # 获取"audio"字段的值
         image = data.get('image')  # 获取"audio"字段的值
@@ -29,9 +31,9 @@ def scene_detection_v2():
             }
         if scene_id == 3 and image is not None:
             # FIXME: 提示词修改,应该有更好的形式
-            original = predict(
-                "What's in this picture?",
-                img_file_path, "")
+            original = predict(prompt
+                               ,
+                               img_file_path, "")
             result = predict(
                 "Whether Grabbed something off the table and return '1' if they fall, otherwise '0'. You can only return '1' or '0'",
                 img_file_path, "result only '0' or '1'")
@@ -59,7 +61,8 @@ def scene_detection_v2():
             mqtt_data = {
                 "img": image,
                 "result": original,
-                "warn": int(result)
+                "warn": int(result),
+                "prompt": prompt
 
             }
             client.publish("llava-result", json.dumps(mqtt_data))
