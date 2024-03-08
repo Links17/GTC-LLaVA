@@ -35,7 +35,7 @@ docker run -d --runtime nvidia  --network host  -v /etc/enctune.conf:/etc/enctun
 curl --location 'http://127.0.0.1:8888/ai/scene_detection' \
 --header 'Content-Type: application/json' \
 --data '{
-    "sceneId":1,
+    "sceneId":3,
     "image":"base64 image"
     }'
 ```
