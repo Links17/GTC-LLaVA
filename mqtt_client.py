@@ -1,17 +1,5 @@
-import argparse
-import os
-import numpy as np
-import speech_recognition as sr
-
-from datetime import datetime, timedelta
-from queue import Queue
-from time import sleep
-from sys import platform
-
 import random
-import time
 
-from flask import json
 from paho.mqtt import client as mqtt_client
 
 broker = '192.168.200.250'
