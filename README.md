@@ -1,7 +1,7 @@
 # GTC-LLaVA
 
 GTC Demo
-
+saf
 ## 说明
 
 使用local_llm+llava形式,传输图片解析,返回tasklist 给设备,并且推送MQTT消息(topic:“llava-result”)
