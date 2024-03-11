@@ -1,7 +1,7 @@
 # GTC-LLaVA
 
 GTC Demo
-saf
+
 ## 说明
 
 使用local_llm+llava形式,传输图片解析,返回tasklist 给设备,并且推送MQTT消息(topic:“llava-result”)
@@ -32,7 +32,7 @@ docker run -d --runtime nvidia  --network host  -v /etc/enctune.conf:/etc/enctun
 ```
 4. 测试
 ```bash
-curl --location 'http://127.0.0.1:8888/ai/scene_detection' \
+curl --location 'http://127.0.0.1:8888/gtc/scene_detection' \
 --header 'Content-Type: application/json' \
 --data '{
     "sceneId":3,

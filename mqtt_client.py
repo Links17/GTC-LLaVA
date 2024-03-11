@@ -1,7 +1,7 @@
 import argparse
 import os
 import numpy as np
-import speech_recognition as sr
+# import speech_recognition as sr
 
 from datetime import datetime, timedelta
 from queue import Queue
@@ -14,7 +14,7 @@ import time
 from flask import json
 from paho.mqtt import client as mqtt_client
 
-broker = '192.168.200.250'
+broker = '192.168.49.104'
 port = 1883
 topic = "llava"
 # Generate a Client ID with the publish prefix.

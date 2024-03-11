@@ -48,5 +48,4 @@ def predict(user_text, image_path, system_prompt):
         temperature=args.temperature,
         top_p=args.top_p,
     )
-    os.remove(image_path)
     return str(reply)
