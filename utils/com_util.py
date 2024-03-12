@@ -23,7 +23,12 @@ def image_to_base64(image_file):
 
 
 
-
+def check_taking(taking):
+    lowerString = taking.lower()
+    if "yes" in lowerString:
+        return 1
+    else:
+        return 0
 
 def extract_digits(string):
     result = ""

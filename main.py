@@ -4,16 +4,16 @@ import numpy as np
 from flask import Flask, request
 
 from ai_llm_v2 import predict
-from utils.com_util import extract_digits, base64_to_image
+from utils.com_util import extract_digits, base64_to_image, check_taking
 import utils.audio_array as audio_array
 import mqtt_client
 import os
-
 
 client = mqtt_client.connect_mqtt()
 
 app = Flask(__name__)
 mqtt_send_count = 0
+
 
 @app.route("/gtc/scene_detection", methods=["POST"])
 def scene_detection_v2():
@@ -25,7 +25,7 @@ def scene_detection_v2():
         img_file_path = base64_to_image(image)
 
         prompt1 = "What's in this picture?"
-        prompt2 = "Whether Grabbed something off the table and return '1' if they fall, otherwise '0'. You can only return '1' or '0'"
+        prompt2 = "Is it a human taking something, and if it is. returns '1' if they are, '0' otherwise. Can only return '1' or '0'"
         if image is None or scene_id is None:
             return {
                 "code": 10001,
@@ -35,9 +35,9 @@ def scene_detection_v2():
             }
         if scene_id == 3 and image is not None:
             # FIXME: 提示词修改,应该有更好的形式
-            original = predict( prompt1, img_file_path, "")
-            result = predict(prompt2, img_file_path, "result only '0' or '1'")
-            result = extract_digits(result)
+            original = predict(prompt1, img_file_path, "")
+            result = predict(prompt2, img_file_path, "")
+            result = check_taking(result)
             code = 0
             data = {
                 "sceneId": 3,
@@ -70,7 +70,7 @@ def scene_detection_v2():
             result = client.publish("llava-result", json.dumps(mqtt_data))
             mqtt_send_count += 1
             print(result)
-            
+
             os.remove(img_file_path)
         else:
             code = 10004
